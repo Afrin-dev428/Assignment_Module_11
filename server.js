@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
 
 
 app.listen(PORT, () => {
-    console.log(Server running on http://localhost:${PORT});
+    console.log(`Server running on http://localhost:${PORT}`);
 });
 
 /**
@@ -72,7 +72,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 app.listen(PORT, () => {
-    console.log(Server running on http://localhost:${PORT});
+    console.log(`Server running on http://localhost:${PORT}`);
 });
 
 /**
@@ -143,5 +143,5 @@ app.post('/upload', upload.single('file'), (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(Server running on http://localhost:${PORT});
+    console.log(`Server running on http://localhost:${PORT}`);
 });
