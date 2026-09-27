@@ -74,3 +74,74 @@ const upload = multer({ storage: storage });
 app.listen(PORT, () => {
     console.log(Server running on http://localhost:${PORT});
 });
+
+/**
+ * @file server.js
+ * @description Express server setup with Multer for file upload handling.
+ */
+
+const express = require('express');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+
+const app = express();
+const PORT = 3000;
+
+// Ensure uploads directory exists
+const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir);
+}
+
+/**
+ * Configure Multer Storage Engine.
+ * Specifies destination folder and original file naming convention.
+ * 
+ * @type {multer.StorageEngine}
+ */
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+    }
+});
+
+/**
+ * Multer upload middleware instance.
+ * @type {multer.Multer}
+ */
+const upload = multer({ storage: storage });
+
+// Serve uploaded files statically
+app.use('/uploads', express.static(uploadDir));
+
+/**
+ * POST /upload
+ * Handles single file uploads via form-data.
+ * 
+ * @name post/upload
+ * @function
+ * @param {string} path - Express route path.
+ * @param {express.RequestHandler} middleware - Multer upload middleware.
+ * @param {function(express.Request, express.Response): void} controller - Handler function.
+ */
+app.post('/upload', upload.single('file'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({
+            message: 'No file uploaded. Please select a file.'
+        });
+    }
+
+    res.status(200).json({
+        message: 'File uploaded successfully',
+        file: req.file.path
+    });
+});
+
+app.listen(PORT, () => {
+    console.log(Server running on http://localhost:${PORT});
+});
