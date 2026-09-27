@@ -1,0 +1,26 @@
+{
+  "name": "assignment_module_11",
+  "version": "1.0.0",
+  "description": "Assignment on Module-11",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Afrin-dev428/Assignment_Module_11.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Afrin-dev428/Assignment_Module_11/issues"
+  },
+  "homepage": "https://github.com/Afrin-dev428/Assignment_Module_11#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "multer": "^2.4.0"
+  }
+}
